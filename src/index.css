@@ -1,0 +1,94 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #0b0506;
+  --color-ink-2: #150a0c;
+  --color-wine: #4a0710;
+  --color-blood: #b3001b;
+  --color-scarlet: #e1132b;
+  --color-bone: #f2e8dc;
+  --color-muted: #b9a9a3;
+  --color-gold: #c9a45c;
+
+  --font-display: 'Bodoni Moda', 'Didot', 'Times New Roman', serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+  --font-script: 'Pinyon Script', cursive;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-marquee: marquee var(--duration, 40s) linear infinite;
+  --animate-spin-slow: spin 22s linear infinite;
+  --animate-grain: grain 8s steps(10) infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -10%); }
+    30% { transform: translate(3%, -15%); }
+    50% { transform: translate(12%, 9%); }
+    70% { transform: translate(9%, 4%); }
+    90% { transform: translate(-1%, 7%); }
+  }
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color: var(--color-bone);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-ink);
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-blood);
+    color: var(--color-bone);
+  }
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@utility tracking-mega {
+  letter-spacing: 0.42em;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* Vermelho com grão, como nas páginas do portfólio */
+@utility bg-velvet {
+  background:
+    radial-gradient(120% 80% at 15% 10%, rgb(225 19 43 / 0.55), transparent 60%),
+    radial-gradient(90% 70% at 85% 90%, rgb(74 7 16 / 0.95), transparent 70%),
+    linear-gradient(160deg, #8f0016 0%, #4a0710 55%, #1a0508 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
