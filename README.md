@@ -32,5 +32,5 @@ Cores e fontes do tema ficam em `src/index.css` (`--color-blood`, `--color-bone`
 
 ## Deploy
 
-Cada push na `main` publica automaticamente em **https://leoeliel.github.io/horus-landing-page/** via GitHub Actions (`.github/workflows/deploy.yml`).
+Cada push na `main` publica automaticamente em **https://trirreme-tri.github.io/horus-landing-page/** via GitHub Actions (`.github/workflows/deploy.yml`).
 O `base` do Vite é `/horus-landing-page/` no build; por isso imagens em `public/` devem ser referenciadas com o helper `img()` de `src/data.ts`.
