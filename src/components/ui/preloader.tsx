@@ -19,13 +19,15 @@ export function Preloader({ onDone }: { onDone: () => void }) {
 
   return (
     <motion.div
+      aria-hidden
       className="bg-velvet fixed inset-0 z-[100] flex flex-col justify-between p-6 md:p-10"
       initial={{ clipPath: 'inset(0 0 0% 0)' }}
       exit={{ clipPath: 'inset(0 0 100% 0)', transition: { duration: 1.1, ease } }}
     >
       <p className="text-[10px] font-semibold uppercase tracking-mega text-bone/80 md:text-xs">Portfólio Hórus</p>
       <div className="overflow-hidden">
-        <motion.h1
+        {/* <p>, não <h1>: o título da página é o do Hero; a abertura é decorativa */}
+        <motion.p
           className="font-display text-[22vw] font-light leading-[0.8] tracking-[0.04em] text-bone md:text-[16vw]"
           initial={{ y: '100%' }}
           animate={{ y: '0%' }}
@@ -33,7 +35,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
           transition={{ duration: 1.1, ease }}
         >
           HÓRUS
-        </motion.h1>
+        </motion.p>
       </div>
       <div className="flex items-end justify-between text-bone/80">
         <p className="max-w-[16ch] text-xs uppercase tracking-[0.3em]">Design editorial desde 2020</p>
