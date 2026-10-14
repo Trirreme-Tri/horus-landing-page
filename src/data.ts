@@ -94,3 +94,14 @@ export const printWorks = [
   { src: img('print/wrap-rei-benjamin.webp'), title: 'O Rei Benjamin', author: 'Maria D’Silva', tag: 'Capa completa' },
   { src: img('print/wrap-inesperada-atracao.webp'), title: 'Inesperada Atração', author: 'Lucy Foster', tag: 'Adaptação para físico' },
 ]
+
+/** Capítulo "Anatomia de uma capa": a capa que vira livro 3D e as etapas mostradas no scroll. */
+export const anatomyBook = { slug: 'furia-escarlate', title: 'Fúria Escarlate', author: 'A. Z. Florence' }
+
+// TODO(Juliana): revisar estes textos antes do merge.
+export const anatomyStages = [
+  { name: 'Rascunho', text: 'A composição vem primeiro: onde fica o personagem e onde o título respira.' },
+  { name: 'Cor', text: 'A paleta conversa com o gênero. O leitor reconhece o clima antes de ler uma palavra.' },
+  { name: 'Acabamento', text: 'Luz, textura e letra ajustadas até a capa funcionar pequena, na vitrine da Amazon.' },
+  { name: 'Volume', text: 'No livro físico, lombada e quarta capa continuam a mesma história.' },
+]

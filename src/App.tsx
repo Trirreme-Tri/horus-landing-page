@@ -2,6 +2,7 @@ import Lenis from 'lenis'
 import { AnimatePresence, MotionConfig } from 'motion/react'
 import { useCallback, useEffect, useState } from 'react'
 import { About } from '@/components/sections/about'
+import { Anatomy } from '@/components/sections/anatomy'
 import { Contact } from '@/components/sections/contact'
 import { Hero } from '@/components/sections/hero'
 import { Marquee } from '@/components/sections/marquee'
@@ -46,6 +47,7 @@ export default function App() {
         <Marquee />
         <About />
         <Portfolio />
+        <Anatomy />
         <Print />
         <Services />
         <Social />
