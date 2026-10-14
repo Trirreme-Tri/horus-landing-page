@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 export default defineConfig(({ command }) => ({
-  // GitHub Pages publica em https://leoeliel.github.io/horus-landing-page/
+  // GitHub Pages publica em https://trirreme-tri.github.io/horus-landing-page/
   base: command === 'build' ? '/horus-landing-page/' : '/',
   plugins: [react(), tailwindcss()],
   // libera o host do port forwarding do GitHub Codespaces
