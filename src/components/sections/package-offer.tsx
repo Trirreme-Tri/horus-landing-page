@@ -10,7 +10,7 @@ export function PackageOffer() {
   const spotlight = useMotionTemplate`radial-gradient(600px circle at ${mx}% ${my}%, rgb(225 19 43 / 0.35), transparent 60%)`
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
+    <section id="pacote" className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
       <div
         onPointerMove={(e) => {
           const r = e.currentTarget.getBoundingClientRect()

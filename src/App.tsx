@@ -2,6 +2,7 @@ import Lenis from 'lenis'
 import { AnimatePresence, MotionConfig } from 'motion/react'
 import { useCallback, useEffect, useState } from 'react'
 import { About } from '@/components/sections/about'
+import { Anatomy } from '@/components/sections/anatomy'
 import { Contact } from '@/components/sections/contact'
 import { Hero } from '@/components/sections/hero'
 import { Marquee } from '@/components/sections/marquee'
@@ -11,6 +12,7 @@ import { Portfolio } from '@/components/sections/portfolio'
 import { Print } from '@/components/sections/print'
 import { Services } from '@/components/sections/services'
 import { Social } from '@/components/sections/social'
+import { ChapterMarker } from '@/components/ui/chapter-marker'
 import { Cursor } from '@/components/ui/cursor'
 import { Grain } from '@/components/ui/grain'
 import { Preloader } from '@/components/ui/preloader'
@@ -40,12 +42,14 @@ export default function App() {
       <AnimatePresence>{!ready && <Preloader onDone={done} />}</AnimatePresence>
       <Grain />
       <Cursor />
+      <ChapterMarker />
       <Nav ready={ready} />
       <main>
         <Hero ready={ready} />
         <Marquee />
         <About />
         <Portfolio />
+        <Anatomy />
         <Print />
         <Services />
         <Social />

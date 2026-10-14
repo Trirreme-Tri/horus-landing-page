@@ -7,7 +7,7 @@ export function Social() {
   const rows = [socialPosts.slice(0, half), socialPosts.slice(half)]
 
   return (
-    <section className="relative overflow-hidden py-24 md:py-36">
+    <section id="redes" className="relative overflow-hidden py-24 md:py-36">
       <div className="mx-auto mb-12 max-w-7xl px-4 md:mb-16 md:px-8">
         <p className="text-[10px] font-semibold uppercase tracking-mega text-scarlet md:text-xs">Redes sociais</p>
         <h2 className="mt-6 max-w-4xl font-display text-5xl font-light leading-[0.95] md:text-8xl">

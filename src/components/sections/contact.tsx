@@ -1,5 +1,6 @@
 import { motion, useInView } from 'motion/react'
 import { useRef } from 'react'
+import { useCurtain } from '@/components/ui/curtain'
 import { HorusMark } from '@/components/ui/logo'
 import { Magnetic } from '@/components/ui/magnetic'
 import { SplitReveal } from '@/components/ui/split-reveal'
@@ -9,10 +10,12 @@ const YEAR = new Date().getFullYear()
 
 export function Contact() {
   const sigRef = useRef<HTMLDivElement>(null)
+  const section = useRef<HTMLElement>(null)
+  const clipPath = useCurtain(section)
   const inView = useInView(sigRef, { once: true, margin: '-15%' })
 
   return (
-    <section id="contato" className="relative overflow-hidden bg-velvet">
+    <motion.section ref={section} style={{ clipPath }} id="contato" className="relative overflow-hidden bg-velvet">
       <div className="mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-4 py-24 text-center md:px-8">
         <p className="text-[10px] font-semibold uppercase tracking-mega text-bone/80 md:text-xs">
           Vamos dar um rosto à sua história
@@ -89,6 +92,6 @@ export function Contact() {
           <span>© {YEAR} · Juliana Brum</span>
         </div>
       </footer>
-    </section>
+    </motion.section>
   )
 }
