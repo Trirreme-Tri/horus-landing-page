@@ -15,7 +15,9 @@ import { Social } from '@/components/sections/social'
 import { ChapterMarker } from '@/components/ui/chapter-marker'
 import { Cursor } from '@/components/ui/cursor'
 import { Grain } from '@/components/ui/grain'
+import { LightboxProvider } from '@/components/ui/lightbox'
 import { Preloader } from '@/components/ui/preloader'
+import { setLenis } from '@/lib/scroll'
 
 export default function App() {
   // Quem pediu menos movimento ao sistema não espera os 2s da abertura.
@@ -27,18 +29,21 @@ export default function App() {
     const lenis = new Lenis({ lerp: 0.09, anchors: true })
     if (!ready) lenis.stop()
     else lenis.start()
+    setLenis(lenis)
     let raf = requestAnimationFrame(function loop(t) {
       lenis.raf(t)
       raf = requestAnimationFrame(loop)
     })
     return () => {
       cancelAnimationFrame(raf)
+      setLenis(null)
       lenis.destroy()
     }
   }, [ready])
 
   return (
     <MotionConfig reducedMotion="user">
+      <LightboxProvider>
       <AnimatePresence>{!ready && <Preloader onDone={done} />}</AnimatePresence>
       <Grain />
       <Cursor />
@@ -56,6 +61,7 @@ export default function App() {
         <PackageOffer />
         <Contact />
       </main>
+      </LightboxProvider>
     </MotionConfig>
   )
 }

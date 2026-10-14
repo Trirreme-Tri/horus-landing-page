@@ -1,6 +1,9 @@
 export const INSTAGRAM_URL = 'https://www.instagram.com/horuseditorialdesign/'
 export const DM_URL = 'https://ig.me/m/horuseditorialdesign'
 
+/** Crédito no rodapé: empresa que desenvolveu o site. */
+export const DEVELOPER_URL = 'https://trirreme.com/'
+
 export type Cover = { slug: string; title: string; author: string }
 
 const cover = (slug: string, title: string, author: string): Cover => ({ slug, title, author })
