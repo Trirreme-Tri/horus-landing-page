@@ -64,9 +64,13 @@ export function Hero({ ready }: { ready: boolean }) {
           Design editorial · desde 2020
         </motion.p>
 
-        <h1 className="font-display text-[21vw] font-light leading-[0.78] tracking-[0.02em] md:text-[17vw]">
+        <h1
+          aria-label="Hórus Design Editorial"
+          className="font-display text-[21vw] font-light leading-[0.78] tracking-[0.02em] md:text-[17vw]"
+        >
+          {/* letras separadas só para a animação; leitores de tela leem o aria-label */}
           {'HÓRUS'.split('').map((ch, i) => (
-            <span key={i} className="-mt-[0.22em] inline-block overflow-hidden pt-[0.22em] align-bottom">
+            <span key={i} aria-hidden className="-mt-[0.22em] inline-block overflow-hidden pt-[0.22em] align-bottom">
               <motion.span
                 className="inline-block"
                 initial={{ y: '125%' }}

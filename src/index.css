@@ -40,11 +40,14 @@
     color: var(--color-bone);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /* clip (e não hidden): corta o que vaza para os lados sem criar área rolável,
+       então o celular não consegue arrastar a página de lado e o position: sticky continua funcionando */
+    overflow-x: clip;
   }
   body {
     font-family: var(--font-sans);
     background: var(--color-ink);
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   ::selection {
     background: var(--color-blood);

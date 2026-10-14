@@ -41,7 +41,7 @@ function HorizontalGallery() {
   const bar = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
 
   return (
-    <div ref={target} style={{ height: `calc(100vh + ${distance}px)` }} className="relative">
+    <div ref={target} style={{ height: `calc(100svh + ${distance}px)` }} className="relative">
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden">
         <div className="mx-auto mb-8 flex w-full max-w-7xl items-end justify-between gap-6 px-4 md:mb-12 md:px-8">
           <h2 className="font-display text-6xl font-light leading-[0.85] md:text-[7rem]">

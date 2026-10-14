@@ -16,7 +16,8 @@ import { Grain } from '@/components/ui/grain'
 import { Preloader } from '@/components/ui/preloader'
 
 export default function App() {
-  const [ready, setReady] = useState(false)
+  // Quem pediu menos movimento ao sistema não espera os 2s da abertura.
+  const [ready, setReady] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const done = useCallback(() => setReady(true), [])
 
   useEffect(() => {
