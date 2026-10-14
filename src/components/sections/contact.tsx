@@ -4,7 +4,7 @@ import { useCurtain } from '@/components/ui/curtain'
 import { HorusMark } from '@/components/ui/logo'
 import { Magnetic } from '@/components/ui/magnetic'
 import { SplitReveal } from '@/components/ui/split-reveal'
-import { DM_URL, INSTAGRAM_URL } from '@/data'
+import { DEVELOPER_URL, DM_URL, INSTAGRAM_URL } from '@/data'
 
 const YEAR = new Date().getFullYear()
 
@@ -91,6 +91,17 @@ export function Contact() {
             @horuseditorialdesign
           </a>
           <span>© {YEAR} · Juliana Brum</span>
+        </div>
+        <div className="border-t border-bone/10 px-4 py-5 text-center text-[11px] tracking-[0.12em] text-bone/45 md:px-8">
+          Desenvolvido por{' '}
+          <a
+            href={DEVELOPER_URL}
+            target="_blank"
+            rel="noopener"
+            className="font-semibold tracking-[0.3em] text-bone/70 underline-offset-4 transition-colors hover:text-bone hover:underline focus-visible:text-bone focus-visible:underline"
+          >
+            TRIRREME
+          </a>
         </div>
       </footer>
     </motion.section>
