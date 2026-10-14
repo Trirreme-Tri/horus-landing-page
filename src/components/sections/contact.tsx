@@ -5,6 +5,8 @@ import { Magnetic } from '@/components/ui/magnetic'
 import { SplitReveal } from '@/components/ui/split-reveal'
 import { DM_URL, INSTAGRAM_URL } from '@/data'
 
+const YEAR = new Date().getFullYear()
+
 export function Contact() {
   const sigRef = useRef<HTMLDivElement>(null)
   const inView = useInView(sigRef, { once: true, margin: '-15%' })
@@ -84,7 +86,7 @@ export function Contact() {
           <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="hover:text-bone">
             @horuseditorialdesign
           </a>
-          <span>© {new Date().getFullYear()} · Juliana Brum</span>
+          <span>© {YEAR} · Juliana Brum</span>
         </div>
       </footer>
     </section>
