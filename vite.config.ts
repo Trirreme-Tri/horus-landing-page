@@ -3,9 +3,10 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command, isPreview }) => ({
   // GitHub Pages publica em https://trirreme-tri.github.io/horus-landing-page/
-  base: command === 'build' ? '/horus-landing-page/' : '/',
+  // O preview serve o build, então precisa do mesmo base (senão os assets dão 404).
+  base: command === 'build' || isPreview ? '/horus-landing-page/' : '/',
   plugins: [react(), tailwindcss()],
   // libera o host do port forwarding do GitHub Codespaces
   server: { host: true, allowedHosts: ['.app.github.dev'] },
