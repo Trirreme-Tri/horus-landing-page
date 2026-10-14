@@ -186,6 +186,8 @@ function Manifesto({ progress }: { progress: MotionValue<number> }) {
       style={{ y }}
       className="pointer-events-none absolute inset-x-0 top-1/2 z-10 mx-auto flex max-w-4xl -translate-y-1/2 flex-wrap justify-center px-6 text-center font-display text-4xl font-light leading-[1.05] md:text-7xl"
     >
+      {/* as palavras animadas não têm espaço real entre si; leitores de tela leem esta cópia */}
+      <span className="sr-only">{manifesto}</span>
       {words.map((w, i) => {
         const start = 0.42 + (i / words.length) * 0.4
         return (
@@ -213,6 +215,7 @@ function ManifestoWord({
   const accent = children.startsWith('personagens')
   return (
     <motion.span
+      aria-hidden
       style={{ opacity, filter: blur }}
       className={cn('mr-[0.25em] inline-block', accent && 'font-script text-scarlet')}
     >
