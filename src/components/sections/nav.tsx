@@ -30,17 +30,20 @@ export function Nav({ ready }: { ready: boolean }) {
     >
       <nav
         className={`mx-auto flex max-w-7xl items-center justify-between rounded-full px-3 py-2 transition-colors duration-500 md:px-4 ${
-          solid ? 'bg-ink/70 ring-1 ring-bone/10 backdrop-blur-xl' : 'bg-transparent'
+          solid ? 'bg-paper/80 shadow-[0_10px_30px_-15px_rgb(110_10_22/0.25)] ring-1 ring-ink/5 backdrop-blur-xl' : 'bg-transparent'
         }`}
       >
         <a href="#top" className="flex items-center gap-3" aria-label="Hórus Design Editorial — início">
-          <HorusMark className="size-9 text-bone" />
-          <span className="hidden text-[11px] font-semibold uppercase tracking-[0.35em] sm:block">Hórus</span>
+          <HorusMark className="size-11 text-blood" />
+          <span className="hidden leading-tight sm:block">
+            <span className="block font-display text-xl tracking-[0.18em] text-blood">HÓRUS</span>
+            <span className="block text-[9px] font-semibold uppercase tracking-[0.3em] text-ink/50">Design editorial</span>
+          </span>
         </a>
-        <ul className="hidden items-center gap-8 text-xs font-medium uppercase tracking-[0.2em] text-bone/70 md:flex">
+        <ul className="hidden items-center gap-8 text-xs font-medium uppercase tracking-[0.2em] text-ink/70 md:flex">
           {links.map((l) => (
             <li key={l.href}>
-              <a href={l.href} className="group relative py-1 transition-colors hover:text-bone">
+              <a href={l.href} className="group relative py-1 transition-colors hover:text-blood">
                 {l.label}
                 <span className="absolute inset-x-0 -bottom-0.5 h-px origin-right scale-x-0 bg-scarlet transition-transform duration-500 ease-out-expo group-hover:origin-left group-hover:scale-x-100" />
               </a>
@@ -51,7 +54,7 @@ export function Nav({ ready }: { ready: boolean }) {
           href={DM_URL}
           target="_blank"
           rel="noreferrer"
-          className="rounded-full bg-blood px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-scarlet"
+          className="rounded-full bg-blood px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-bone transition-colors hover:bg-wine"
         >
           Orçamento
         </a>

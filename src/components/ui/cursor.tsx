@@ -21,8 +21,14 @@ export function Cursor() {
       const target = (e.target as HTMLElement | null)?.closest<HTMLElement>('[data-cursor]')
       setLabel(target?.dataset.cursor ?? null)
     }
+    // ao clicar (ex.: abrir o lightbox) o elemento sob o cursor muda sem pointermove
+    const clear = () => setLabel(null)
     window.addEventListener('pointermove', move)
-    return () => window.removeEventListener('pointermove', move)
+    window.addEventListener('click', clear)
+    return () => {
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('click', clear)
+    }
   }, [enabled, x, y])
 
   if (!enabled) return null
@@ -34,10 +40,9 @@ export function Cursor() {
       style={{ x: sx, y: sy }}
     >
       <motion.div
-        className="flex items-center justify-center rounded-full bg-bone text-ink"
+        className="flex items-center justify-center rounded-full bg-blood text-bone"
         animate={{ width: label ? 96 : 10, height: label ? 96 : 10 }}
         transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-        style={{ mixBlendMode: label ? 'normal' : 'difference' }}
       >
         <AnimatePresence>
           {label && (

@@ -21,32 +21,32 @@ export function Services() {
         <h2 className="font-display text-6xl font-light leading-[0.9] md:text-[8rem]">
           Serviços
         </h2>
-        <p className="max-w-sm text-sm leading-relaxed text-bone/60 md:text-base">
+        <p className="max-w-sm text-sm leading-relaxed text-ink/60 md:text-base">
           Para autores independentes, agências literárias e editoras. Cada peça conversa com as outras, para o seu
           lançamento ter uma identidade só.
         </p>
       </div>
 
-      <ul className="border-t border-bone/15" onPointerLeave={() => setActive(null)}>
+      <ul className="border-t border-ink/15" onPointerLeave={() => setActive(null)}>
         {services.map((s, i) => (
           <li
             key={s.name}
             onPointerEnter={(e) => e.pointerType === 'mouse' && setActive(i)}
-            className="group relative border-b border-bone/15"
+            className="group relative border-b border-ink/15"
           >
             <div className="relative z-10 flex items-center gap-4 py-6 md:gap-10 md:py-9">
-              <span className="w-8 text-xs tabular-nums text-bone/40 md:w-12">{String(i + 1).padStart(2, '0')}</span>
+              <span className="w-8 text-xs tabular-nums text-ink/40 md:w-12">{String(i + 1).padStart(2, '0')}</span>
               <img src={s.image} alt="" loading="lazy" className="size-16 shrink-0 rounded-md object-cover md:hidden" />
               <div className="flex flex-1 flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-10">
-                <h3 className="font-display text-3xl font-light transition-transform duration-500 ease-out-expo group-hover:translate-x-4 md:text-6xl">
+                <h3 className="font-display text-3xl font-light transition-transform duration-500 ease-out-expo group-hover:translate-x-4 group-hover:text-blood md:text-6xl">
                   {s.name}
                 </h3>
-                <p className="text-sm text-bone/55 transition-colors group-hover:text-bone/90 md:max-w-xs md:text-right">
+                <p className="text-sm text-ink/55 transition-colors group-hover:text-ink/90 md:max-w-xs md:text-right">
                   {s.note}
                 </p>
               </div>
             </div>
-            <span className="absolute inset-0 origin-bottom scale-y-0 bg-blood/25 transition-transform duration-500 ease-out-expo group-hover:scale-y-100" />
+            <span className="absolute inset-0 origin-bottom scale-y-0 bg-blood/[0.07] transition-transform duration-500 ease-out-expo group-hover:scale-y-100" />
           </li>
         ))}
       </ul>

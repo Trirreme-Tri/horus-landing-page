@@ -10,7 +10,7 @@ export function Contact() {
   const inView = useInView(sigRef, { once: true, margin: '-15%' })
 
   return (
-    <section id="contato" className="relative overflow-hidden bg-velvet">
+    <section id="contato" className="bg-velvet relative overflow-hidden text-bone">
       <div className="mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-4 py-24 text-center md:px-8">
         <p className="text-[10px] font-semibold uppercase tracking-mega text-bone/80 md:text-xs">
           Vamos dar um rosto à sua história
@@ -27,9 +27,9 @@ export function Contact() {
               target="_blank"
               rel="noreferrer"
               data-cursor="Vamos!"
-              className="group relative flex size-40 items-center justify-center rounded-full bg-bone text-ink md:size-52"
+              className="group relative flex size-40 items-center justify-center rounded-full bg-bone text-blood md:size-52"
             >
-              <span className="absolute inset-0 scale-0 rounded-full bg-ink transition-transform duration-500 ease-out-expo group-hover:scale-100" />
+              <span className="absolute inset-0 scale-0 rounded-full bg-wine transition-transform duration-500 ease-out-expo group-hover:scale-100" />
               <span className="relative text-xs font-bold uppercase leading-relaxed tracking-[0.22em] transition-colors duration-500 group-hover:text-bone md:text-sm">
                 Chamar no
                 <br />
@@ -78,7 +78,7 @@ export function Contact() {
         </div>
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 text-[11px] uppercase tracking-[0.2em] text-bone/60 md:flex-row md:px-8">
           <span className="flex items-center gap-3">
-            <HorusMark className="size-7 text-bone" />
+            <HorusMark className="size-7 text-bone" ink="var(--color-blood)" />
             Hórus Design Editorial
           </span>
           <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className="hover:text-bone">

@@ -13,7 +13,9 @@ import { Services } from '@/components/sections/services'
 import { Social } from '@/components/sections/social'
 import { Cursor } from '@/components/ui/cursor'
 import { Grain } from '@/components/ui/grain'
+import { LightboxProvider } from '@/components/ui/lightbox'
 import { Preloader } from '@/components/ui/preloader'
+import { lenisRef } from '@/lib/lenis'
 
 export default function App() {
   const [ready, setReady] = useState(false)
@@ -22,6 +24,7 @@ export default function App() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const lenis = new Lenis({ lerp: 0.09, anchors: true })
+    lenisRef.current = lenis
     if (!ready) lenis.stop()
     else lenis.start()
     let raf = requestAnimationFrame(function loop(t) {
@@ -31,26 +34,29 @@ export default function App() {
     return () => {
       cancelAnimationFrame(raf)
       lenis.destroy()
+      lenisRef.current = null
     }
   }, [ready])
 
   return (
     <MotionConfig reducedMotion="user">
-      <AnimatePresence>{!ready && <Preloader onDone={done} />}</AnimatePresence>
-      <Grain />
-      <Cursor />
-      <Nav ready={ready} />
-      <main>
-        <Hero ready={ready} />
-        <Marquee />
-        <About />
-        <Portfolio />
-        <Print />
-        <Services />
-        <Social />
-        <PackageOffer />
-        <Contact />
-      </main>
+      <LightboxProvider>
+        <AnimatePresence>{!ready && <Preloader onDone={done} />}</AnimatePresence>
+        <Grain />
+        <Cursor />
+        <Nav ready={ready} />
+        <main>
+          <Hero ready={ready} />
+          <Marquee />
+          <About />
+          <Portfolio />
+          <Print />
+          <Services />
+          <Social />
+          <PackageOffer />
+          <Contact />
+        </main>
+      </LightboxProvider>
     </MotionConfig>
   )
 }

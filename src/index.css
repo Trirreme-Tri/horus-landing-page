@@ -1,16 +1,17 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-ink: #0b0506;
-  --color-ink-2: #150a0c;
-  --color-wine: #4a0710;
-  --color-blood: #b3001b;
-  --color-scarlet: #e1132b;
-  --color-bone: #f2e8dc;
-  --color-muted: #b9a9a3;
-  --color-gold: #c9a45c;
+  /* Paleta "branco com vermelho": fundo claro, vermelho como protagonista, sem preto */
+  --color-paper: #fbf7f3; /* fundo principal */
+  --color-blush: #f5e7e3; /* seções suaves */
+  --color-ink: #2b1417; /* texto (vinho bem escuro, não preto) */
+  --color-wine: #6e0a16;
+  --color-blood: #a8101f; /* vermelho principal */
+  --color-scarlet: #c8102e; /* vermelho de destaque */
+  --color-bone: #fff8f2; /* texto claro sobre vermelho */
+  --color-gold: #b8914a;
 
-  --font-display: 'Bodoni Moda', 'Didot', 'Times New Roman', serif;
+  --font-display: 'Newsreader', 'Times New Roman', Times, serif;
   --font-sans: 'Manrope', system-ui, sans-serif;
   --font-script: 'Pinyon Script', cursive;
 
@@ -36,14 +37,14 @@
 
 @layer base {
   html {
-    background: var(--color-ink);
-    color: var(--color-bone);
+    background: var(--color-paper);
+    color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
   body {
     font-family: var(--font-sans);
-    background: var(--color-ink);
+    background: var(--color-paper);
     overflow-x: hidden;
   }
   ::selection {
@@ -76,12 +77,20 @@ html.lenis body {
   text-wrap: balance;
 }
 
-/* Vermelho com grão, como nas páginas do portfólio */
+/* Vermelho aveludado, mais suave: sem cair no preto */
 @utility bg-velvet {
   background:
-    radial-gradient(120% 80% at 15% 10%, rgb(225 19 43 / 0.55), transparent 60%),
-    radial-gradient(90% 70% at 85% 90%, rgb(74 7 16 / 0.95), transparent 70%),
-    linear-gradient(160deg, #8f0016 0%, #4a0710 55%, #1a0508 100%);
+    radial-gradient(120% 80% at 15% 10%, rgb(222 40 62 / 0.55), transparent 60%),
+    radial-gradient(90% 70% at 85% 90%, rgb(110 10 22 / 0.7), transparent 70%),
+    linear-gradient(160deg, #b3122a 0%, #95101f 55%, #6e0a16 100%);
+}
+
+/* Brilho rosado suave para fundos claros */
+@utility bg-blush-glow {
+  background:
+    radial-gradient(60% 70% at 78% 30%, rgb(200 16 46 / 0.12), transparent 70%),
+    radial-gradient(50% 60% at 10% 90%, rgb(200 16 46 / 0.08), transparent 70%),
+    var(--color-paper);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,7 +1,10 @@
 import { motion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { useRef } from 'react'
+import { useLightbox } from '@/components/ui/lightbox'
 import { SplitReveal } from '@/components/ui/split-reveal'
 import { img, printWorks, postSrc } from '@/data'
+
+const printItems = printWorks.map((w) => ({ src: w.src, title: w.title, subtitle: `${w.author} · ${w.tag}` }))
 
 /** Do e-book ao livro físico: capas completas empilhando no scroll. */
 export function Print() {
@@ -9,7 +12,7 @@ export function Print() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
 
   return (
-    <section className="relative bg-velvet">
+    <section className="bg-velvet relative text-bone">
       <div className="mx-auto max-w-7xl px-4 pt-24 md:px-8 md:pt-36">
         <p className="text-[10px] font-semibold uppercase tracking-mega text-bone/80 md:text-xs">Do e-book à gráfica</p>
         <h2 className="mt-6 font-display text-6xl font-light leading-[0.9] md:text-[8rem]">
@@ -52,13 +55,21 @@ function StackCard({
   const y = useTransform(progress, [start - step, start], index === 0 ? ['0%', '0%'] : ['110%', '0%'])
   const scale = useTransform(progress, [start, 1], [1, 1 - (total - index) * 0.04])
   const dim = useTransform(progress, [start, start + step], [0, index === total - 1 ? 0 : 0.5])
+  const open = useLightbox()
 
   return (
     <div className="absolute inset-x-4 top-1/2 mx-auto max-w-5xl -translate-y-1/2 md:inset-x-8" style={{ marginTop: index * 14 }}>
       <motion.figure style={{ y, scale }} className="origin-top">
         <div className="relative overflow-hidden rounded-xl shadow-[0_-20px_80px_-20px_rgb(0_0_0/0.7)] ring-1 ring-white/10">
-          <img src={work.src} alt={`Capa completa de ${work.title}, de ${work.author}`} loading="lazy" className="w-full" />
-          <motion.div style={{ opacity: dim }} className="absolute inset-0 bg-ink" />
+          <img
+            src={work.src}
+            alt={`Capa completa de ${work.title}, de ${work.author}`}
+            loading="lazy"
+            data-cursor="Ver"
+            onClick={(e) => open(printItems, index, e.currentTarget)}
+            className="w-full cursor-zoom-in"
+          />
+          <motion.div style={{ opacity: dim }} className="pointer-events-none absolute inset-0 bg-wine" />
         </div>
         <figcaption className="mt-3 flex items-center justify-between text-xs uppercase tracking-[0.2em] text-bone/80">
           <span>

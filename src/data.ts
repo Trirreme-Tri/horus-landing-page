@@ -34,6 +34,9 @@ export const covers: Cover[] = [
 /** Caminho de imagem em public/img respeitando o base path (GitHub Pages serve em /horus-landing-page/). */
 export const img = (path: string) => `${import.meta.env.BASE_URL}img/${path}`
 export const coverSrc = (slug: string) => img(`covers/${slug}.webp`)
+/** Converte capas para itens do lightbox. */
+export const coverItems = (list: Cover[]) => list.map((c) => ({ src: coverSrc(c.slug), title: c.title, subtitle: c.author }))
+export const coverBySlug = (slug: string) => covers.find((c) => c.slug === slug)!
 export const postSrc = (id: string) => img(`posts/${id}.webp`)
 
 export const services = [

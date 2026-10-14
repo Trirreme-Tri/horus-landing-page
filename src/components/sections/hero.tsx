@@ -1,70 +1,99 @@
 import { motion, useMotionValue, useScroll, useSpring, useTransform, type MotionValue } from 'motion/react'
 import { useRef } from 'react'
-import { coverSrc, DM_URL } from '@/data'
+import { useLightbox } from '@/components/ui/lightbox'
+import { HorusMark } from '@/components/ui/logo'
 import { Magnetic } from '@/components/ui/magnetic'
+import { RotatingBadge } from '@/components/ui/rotating-badge'
+import { coverBySlug, coverItems, DM_URL, img } from '@/data'
 import { cn } from '@/lib/utils'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
-type Floating = {
-  slug: string
-  className: string
-  rotate: number
-  depth: number
-}
+type Floating = { slug: string; className: string; rotate: number; depth: number }
 
-// Capas flutuando em volta do título; depth controla parallax de mouse e scroll.
+// Capas flutuando do lado direito; depth controla o parallax de mouse e scroll.
 const floating: Floating[] = [
-  { slug: 'furia-escarlate', className: 'left-[4%] top-[9%] w-[22vw] md:top-[16%] md:w-[13vw]', rotate: -9, depth: 0.9 },
-  { slug: 'apaixonada-pelo-mafioso-errado', className: 'left-[17%] top-[58%] hidden md:block md:w-[11vw]', rotate: 6, depth: 1.4 },
-  { slug: 'nos-labios-do-inimigo', className: 'right-[4%] top-[8%] w-[20vw] md:top-[12%] md:w-[12vw]', rotate: 8, depth: 1.1 },
-  { slug: 'senador-e-a-bailarina', className: 'right-[5%] bottom-[4%] w-[22vw] md:bottom-auto md:right-[15%] md:top-[56%] md:w-[13vw]', rotate: -6, depth: 1.6 },
-  { slug: 'reinado-submerso', className: 'left-[34%] top-[6%] hidden md:block md:w-[7.5vw] blur-[1.5px] opacity-70', rotate: 4, depth: 0.4 },
-  { slug: 'o-caminho-para-as-estrelas', className: 'right-[36%] bottom-[4%] hidden md:block md:w-[8vw] blur-[1px] opacity-80', rotate: -4, depth: 0.5 },
-  { slug: 'coroa-escarlate', className: 'left-[6%] bottom-[5%] w-[20vw] md:hidden', rotate: 5, depth: 1.2 },
+  { slug: 'furia-escarlate', className: 'right-[5%] top-[60%] w-[22vw] md:right-[3%] md:top-[12%] md:w-[10vw]', rotate: 8, depth: 1.1 },
+  { slug: 'nos-labios-do-inimigo', className: 'right-[30%] top-[7%] hidden md:block md:right-[20%] md:top-[5%] md:w-[7vw] blur-[1px] opacity-80', rotate: -5, depth: 0.5 },
+  { slug: 'senador-e-a-bailarina', className: 'right-[22%] bottom-[3%] w-[24vw] md:right-[4%] md:bottom-[7%] md:w-[11vw]', rotate: -6, depth: 1.5 },
+  { slug: 'apaixonada-pelo-mafioso-errado', className: 'right-[26%] bottom-[3%] hidden md:block md:right-[17%] md:bottom-[4%] md:w-[8vw]', rotate: 5, depth: 0.8 },
 ]
+const heroCovers = floating.map((f) => coverBySlug(f.slug))
 
 export function Hero({ ready }: { ready: boolean }) {
   const ref = useRef<HTMLElement>(null)
   const mx = useSpring(useMotionValue(0), { stiffness: 60, damping: 20 })
   const my = useSpring(useMotionValue(0), { stiffness: 60, damping: 20 })
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const titleScale = useTransform(scrollYProgress, [0, 1], [1, 0.82])
-  const titleY = useTransform(scrollYProgress, [0, 1], ['0%', '40%'])
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '35%'])
   const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0])
+  const mascotX = useTransform(mx, (v) => v * -18)
+  const mascotY = useTransform(scrollYProgress, [0, 1], ['0%', '12%'])
 
   return (
     <section
       id="top"
       ref={ref}
-      className="relative flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden"
+      className="bg-blush-glow relative h-[100svh] min-h-[680px] overflow-hidden"
       onPointerMove={(e) => {
         if (e.pointerType !== 'mouse') return
         mx.set(e.clientX / window.innerWidth - 0.5)
         my.set(e.clientY / window.innerHeight - 0.5)
       }}
     >
-      {/* brilho vermelho de fundo */}
-      <div aria-hidden className="absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 size-[120vmax] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgb(179_0_27/0.55),rgb(74_7_16/0.35)_35%,transparent_65%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink to-transparent" />
-      </div>
+      {/* letreiro gigante de fundo, bem suave */}
+      <motion.p
+        aria-hidden
+        style={{ opacity: fade }}
+        className="pointer-events-none absolute -bottom-[0.18em] left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[34vw] font-light leading-none text-blood/[0.05]"
+      >
+        Hórus
+      </motion.p>
 
       {floating.map((f, i) => (
         <FloatingCover key={f.slug} item={f} index={i} ready={ready} mx={mx} my={my} scroll={scrollYProgress} />
       ))}
 
-      <motion.div style={{ scale: titleScale, y: titleY, opacity: fade }} className="relative z-10 px-4 text-center">
+      {/* mascote ancorada no canto inferior esquerdo: o corte da arte coincide com a borda da tela */}
+      <motion.div
+        style={{ x: mascotX, y: mascotY }}
+        className="pointer-events-none absolute bottom-0 left-0 z-10 w-[66vw] md:h-[88%] md:w-auto"
+      >
+        <motion.img
+          src={img('mascote.webp')}
+          alt="Mascote da Hórus: uma gata egípcia de jaqueta vermelha e colar de ankh"
+          initial={{ opacity: 0, y: 80 }}
+          animate={ready ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1.4, ease, delay: 0.15 }}
+          className="w-full drop-shadow-[0_30px_40px_rgb(110_10_22/0.18)] md:h-full md:w-auto"
+        />
+      </motion.div>
+
+      <motion.div
+        style={{ y: textY, opacity: fade }}
+        className="relative z-20 flex h-full flex-col items-center px-4 pt-24 text-center md:items-start md:justify-center md:pl-[41%] md:pr-[16%] md:pt-0 md:text-left"
+      >
+        {/* selo da marca em destaque */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.6, rotate: -40 }}
+          animate={ready ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+          transition={{ duration: 1.2, ease, delay: 0.3 }}
+          className="relative mb-4 size-20 md:mb-6 md:size-28"
+        >
+          <RotatingBadge text="Hórus ✦ design editorial ✦ " className="absolute inset-0 size-full text-blood" />
+          <HorusMark className="absolute inset-[22%] size-[56%] text-blood" />
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={ready ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, ease, delay: 0.5 }}
-          className="mb-4 text-[10px] font-semibold uppercase tracking-mega text-bone/80 md:mb-6 md:text-xs"
+          className="text-[10px] font-semibold uppercase tracking-mega text-ink/60 md:text-xs"
         >
           Design editorial · desde 2020
         </motion.p>
 
-        <h1 className="font-display text-[21vw] font-light leading-[0.78] tracking-[0.02em] md:text-[17vw]">
+        <h1 className="mt-5 font-display text-[22vw] font-light leading-[0.85] tracking-[0.01em] text-blood md:mt-8 md:text-[10.5vw]">
           {'HÓRUS'.split('').map((ch, i) => (
             <span key={i} className="-mt-[0.22em] inline-block overflow-hidden pt-[0.22em] align-bottom">
               <motion.span
@@ -83,50 +112,36 @@ export function Hero({ ready }: { ready: boolean }) {
           initial={{ opacity: 0, y: 16 }}
           animate={ready ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, ease, delay: 0.75 }}
-          className="mx-auto mt-6 max-w-xl text-balance font-display text-2xl italic leading-snug text-bone/90 md:mt-8 md:text-3xl"
+          className="mt-4 max-w-md text-balance font-display text-xl italic leading-snug text-ink/80 md:mt-6 md:text-3xl"
         >
-          Capas que fazem o leitor parar de rolar, e a história que você escreveu ganhar o rosto que merece.
+          Capas que fazem o leitor parar de rolar, e a sua história ganhar o rosto que merece.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={ready ? { opacity: 1 } : {}}
           transition={{ duration: 1, delay: 1 }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-4 md:mt-10"
+          className="mt-6 flex flex-wrap items-center justify-center gap-3 md:mt-10 md:justify-start md:gap-4"
         >
           <Magnetic>
             <a
               href={DM_URL}
               target="_blank"
               rel="noreferrer"
-              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-bone px-7 py-4 text-xs font-bold uppercase tracking-[0.22em] text-ink"
+              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-blood px-6 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-bone md:px-7 md:py-4 md:text-xs"
             >
-              <span className="absolute inset-0 translate-y-full rounded-full bg-scarlet transition-transform duration-500 ease-out-expo group-hover:translate-y-0" />
-              <span className="relative transition-colors duration-500 group-hover:text-bone">Quero minha capa</span>
-              <span className="relative transition-transform duration-500 group-hover:translate-x-1 group-hover:text-bone">→</span>
+              <span className="absolute inset-0 translate-y-full rounded-full bg-wine transition-transform duration-500 ease-out-expo group-hover:translate-y-0" />
+              <span className="relative">Quero minha capa</span>
+              <span className="relative transition-transform duration-500 group-hover:translate-x-1">→</span>
             </a>
           </Magnetic>
           <a
             href="#portfolio"
-            className="rounded-full px-6 py-4 text-xs font-semibold uppercase tracking-[0.22em] text-bone/80 ring-1 ring-bone/25 transition hover:bg-bone/10 hover:text-bone"
+            className="rounded-full px-5 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-ink/80 ring-1 ring-ink/20 transition hover:bg-ink/5 hover:text-ink md:px-6 md:py-4 md:text-xs"
           >
             Ver portfólio
           </a>
         </motion.div>
-      </motion.div>
-
-      <motion.div
-        style={{ opacity: fade }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-[10px] uppercase tracking-[0.4em] text-bone/60 md:flex"
-      >
-        Role
-        <span className="relative h-10 w-px overflow-hidden bg-bone/20">
-          <motion.span
-            className="absolute inset-x-0 top-0 h-1/2 bg-bone"
-            animate={{ y: ['-100%', '200%'] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </span>
       </motion.div>
     </section>
   )
@@ -147,21 +162,26 @@ function FloatingCover({
   my: MotionValue<number>
   scroll: MotionValue<number>
 }) {
+  const open = useLightbox()
   const x = useTransform(mx, (v) => v * 60 * item.depth)
   const yMouse = useTransform(my, (v) => v * 40 * item.depth)
   const yScroll = useTransform(scroll, [0, 1], [0, -280 * item.depth])
   const y = useTransform(() => yMouse.get() + yScroll.get())
+  const cover = heroCovers[index]
 
   return (
     <motion.div style={{ x, y }} className={cn('absolute z-0', item.className)}>
       <motion.img
-        src={coverSrc(item.slug)}
-        alt=""
+        src={coverItems([cover])[0].src}
+        alt={`Capa de ${cover.title}`}
         loading="eager"
+        data-cursor="Ver"
+        onClick={(e) => open(coverItems(heroCovers), index, e.currentTarget)}
         initial={{ opacity: 0, scale: 0.6, rotate: 0, y: 80 }}
         animate={ready ? { opacity: 1, scale: 1, rotate: item.rotate, y: 0 } : {}}
+        whileHover={{ scale: 1.05, transition: { duration: 0.4 } }}
         transition={{ duration: 1.4, ease, delay: 0.25 + index * 0.08 }}
-        className="aspect-[2/3] w-full rounded-md object-cover shadow-[0_30px_80px_-20px_rgb(0_0_0/0.9)] ring-1 ring-white/10"
+        className="aspect-[2/3] w-full cursor-pointer rounded-md object-cover shadow-[0_30px_60px_-20px_rgb(110_10_22/0.45)] ring-1 ring-black/5"
       />
     </motion.div>
   )

@@ -51,7 +51,7 @@ export function Social() {
           href={INSTAGRAM_URL}
           target="_blank"
           rel="noreferrer"
-          className="inline-block border-b border-bone/30 pb-1 text-xs font-semibold uppercase tracking-[0.3em] text-bone/80 transition hover:border-scarlet hover:text-bone"
+          className="inline-block border-b border-ink/30 pb-1 text-xs font-semibold uppercase tracking-[0.3em] text-ink/80 transition hover:border-blood hover:text-blood"
         >
           @horuseditorialdesign
         </a>

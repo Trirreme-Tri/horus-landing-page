@@ -2,10 +2,12 @@ import { motion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { useLayoutEffect, useRef, useState } from 'react'
 import { SplitReveal } from '@/components/ui/split-reveal'
 import { TiltCard } from '@/components/ui/tilt-card'
-import { coverSrc, covers, type Cover } from '@/data'
+import { useLightbox } from '@/components/ui/lightbox'
+import { coverItems, coverSrc, covers, type Cover } from '@/data'
 
 const featured = covers.slice(0, 12)
 const more = covers.slice(12)
+const allItems = coverItems(covers)
 
 export function Portfolio() {
   return (
@@ -48,7 +50,7 @@ function HorizontalGallery() {
             <SplitReveal text="Capas" />
             <span className="block pl-[0.6em] font-script text-5xl text-scarlet md:text-7xl">que vendem</span>
           </h2>
-          <p className="hidden max-w-xs pb-4 text-sm leading-relaxed text-bone/60 md:block">
+          <p className="hidden max-w-xs pb-4 text-sm leading-relaxed text-ink/60 md:block">
             Romance, máfia, fantasia, hot, esporte. Cada capa é pensada para o leitor do gênero, que decide em um
             segundo se vai clicar.
           </p>
@@ -60,15 +62,15 @@ function HorizontalGallery() {
           ))}
           <a
             href="#mais-capas"
-            className="flex aspect-[2/3] w-[min(62vw,36svh)] shrink-0 flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-bone/25 text-center md:w-[min(22vw,36svh)]"
+            className="flex aspect-[2/3] w-[min(62vw,36svh)] shrink-0 flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-ink/25 text-center md:w-[min(22vw,36svh)]"
           >
             <span className="font-display text-5xl font-light md:text-6xl">+3.000</span>
-            <span className="text-xs uppercase tracking-[0.25em] text-bone/60">trabalhos entregues</span>
+            <span className="text-xs uppercase tracking-[0.25em] text-ink/60">trabalhos entregues</span>
           </a>
         </motion.div>
 
         <div className="mx-auto mt-8 h-px w-full max-w-7xl px-4 md:mt-12 md:px-8">
-          <div className="h-px w-full bg-bone/15">
+          <div className="h-px w-full bg-ink/15">
             <motion.div style={{ width: bar }} className="h-px bg-scarlet" />
           </div>
         </div>
@@ -80,19 +82,21 @@ function HorizontalGallery() {
 function CoverCard({ cover, index, progress }: { cover: Cover; index: number; progress: MotionValue<number> }) {
   // leve ondulação vertical: as capas não andam todas na mesma linha
   const y = useTransform(progress, [0, 1], [index % 2 ? 30 : -30, index % 2 ? -30 : 30])
+  const open = useLightbox()
   return (
     <motion.figure style={{ y }} className="w-[min(62vw,36svh)] shrink-0 md:w-[min(22vw,36svh)]" data-cursor="Ver">
-      <TiltCard className="overflow-hidden rounded-lg shadow-[0_40px_80px_-30px_rgb(0_0_0/0.9)]">
+      <TiltCard className="overflow-hidden rounded-lg shadow-[0_40px_70px_-30px_rgb(110_10_22/0.45)]">
         <img
           src={coverSrc(cover.slug)}
           alt={`Capa de ${cover.title}, de ${cover.author}`}
           loading="lazy"
-          className="aspect-[2/3] w-full object-cover"
+          onClick={(e) => open(allItems, covers.indexOf(cover), e.currentTarget)}
+          className="aspect-[2/3] w-full cursor-zoom-in object-cover"
         />
       </TiltCard>
       <figcaption className="mt-4 flex items-baseline justify-between gap-3">
         <span className="font-display text-lg italic md:text-xl">{cover.title}</span>
-        <span className="shrink-0 text-[10px] uppercase tracking-[0.2em] text-bone/50">{cover.author}</span>
+        <span className="shrink-0 text-[10px] uppercase tracking-[0.2em] text-ink/50">{cover.author}</span>
       </figcaption>
     </motion.figure>
   )
@@ -112,8 +116,8 @@ function ParallaxColumns() {
 
   return (
     <div id="mais-capas" ref={ref} className="relative mx-auto max-w-7xl overflow-hidden px-4 py-24 md:px-8 md:py-32">
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b from-ink to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-ink to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b from-paper to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-paper to-transparent" />
       <Columns columns={split(2)} speeds={speeds} className="grid-cols-2 md:hidden" />
       <Columns columns={split(4)} speeds={speeds} className="hidden md:grid md:grid-cols-4" />
     </div>
@@ -129,6 +133,7 @@ function Columns({
   speeds: MotionValue<string>[]
   className: string
 }) {
+  const open = useLightbox()
   return (
     <div className={`grid gap-4 md:gap-8 ${className}`}>
       {columns.map((col, k) => (
@@ -139,11 +144,12 @@ function Columns({
                 src={coverSrc(c.slug)}
                 alt={`Capa de ${c.title}, de ${c.author}`}
                 loading="lazy"
-                className="aspect-[2/3] w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-105"
+                onClick={(e) => open(allItems, covers.indexOf(c), e.currentTarget)}
+                className="aspect-[2/3] w-full cursor-zoom-in object-cover transition-transform duration-700 ease-out-expo group-hover:scale-105"
               />
-              <figcaption className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-ink/95 to-transparent p-4 pt-12 transition-transform duration-500 ease-out-expo group-hover:translate-y-0">
+              <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-ink/90 to-transparent p-4 pt-12 text-bone transition-transform duration-500 ease-out-expo group-hover:translate-y-0">
                 <span className="block font-display text-lg italic">{c.title}</span>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-bone/60">{c.author}</span>
+                <span className="text-[10px] uppercase tracking-[0.2em] text-bone/70">{c.author}</span>
               </figcaption>
             </figure>
           ))}
