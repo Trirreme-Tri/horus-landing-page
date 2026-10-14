@@ -1,15 +1,18 @@
 import { motion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { useRef } from 'react'
+import { useCurtain } from '@/components/ui/curtain'
 import { SplitReveal } from '@/components/ui/split-reveal'
 import { img, printWorks, postSrc } from '@/data'
 
 /** Do e-book ao livro físico: capas completas empilhando no scroll. */
 export function Print() {
   const ref = useRef<HTMLDivElement>(null)
+  const section = useRef<HTMLElement>(null)
+  const clipPath = useCurtain(section)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
 
   return (
-    <section className="relative bg-velvet">
+    <motion.section ref={section} id="grafica" style={{ clipPath }} className="relative bg-velvet">
       <div className="mx-auto max-w-7xl px-4 pt-24 md:px-8 md:pt-36">
         <p className="text-[10px] font-semibold uppercase tracking-mega text-bone/80 md:text-xs">Do e-book à gráfica</p>
         <h2 className="mt-6 font-display text-6xl font-light leading-[0.9] md:text-[8rem]">
@@ -31,7 +34,7 @@ export function Print() {
       </div>
 
       <Extras />
-    </section>
+    </motion.section>
   )
 }
 
