@@ -1,10 +1,14 @@
 import type { CSSProperties } from 'react'
+import { useLightbox, type LightboxItem } from '@/components/ui/lightbox-context'
 import { INSTAGRAM_URL, socialPosts } from '@/data'
+
+const postItems: LightboxItem[] = socialPosts.map((src) => ({ src, alt: 'Arte de divulgação criada pela Hórus' }))
 
 /** Carrossel infinito de posts: duas fileiras correndo em sentidos opostos. */
 export function Social() {
   const half = Math.ceil(socialPosts.length / 2)
   const rows = [socialPosts.slice(0, half), socialPosts.slice(half)]
+  const open = useLightbox()
 
   return (
     <section id="redes" className="relative overflow-hidden py-24 md:py-36">
@@ -19,27 +23,29 @@ export function Social() {
         {rows.map((row, r) => (
           <div key={r} className="group flex overflow-hidden">
             <div
-              className="animate-marquee flex w-max gap-4 group-hover:[animation-play-state:paused] md:gap-6"
+              className="animate-marquee flex w-max gap-4 group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused] md:gap-6"
               style={{ '--duration': '55s', animationDirection: r ? 'reverse' : 'normal' } as CSSProperties}
             >
               {[...row, ...row].map((src, i) => (
-                <a
+                // As artes ampliam no próprio site (não levam para o Instagram).
+                // A segunda metade é a cópia do loop infinito: fica fora do teclado e dos leitores de tela.
+                <button
                   key={i}
-                  href={INSTAGRAM_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  data-cursor="Instagram"
+                  type="button"
+                  onClick={() => open(postItems, socialPosts.indexOf(src))}
+                  data-cursor="Ver"
                   aria-hidden={i >= row.length}
+                  aria-label={i < row.length ? 'Ampliar arte de divulgação' : undefined}
                   tabIndex={i >= row.length ? -1 : undefined}
-                  className="block w-[48vw] shrink-0 overflow-hidden rounded-xl md:w-[19vw]"
+                  className="block w-[48vw] shrink-0 cursor-zoom-in overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold md:w-[19vw]"
                 >
                   <img
                     src={src}
-                    alt={i < row.length ? 'Post da Hórus no Instagram' : ''}
+                    alt=""
                     loading="lazy"
                     className="aspect-[4/5] w-full object-cover transition-transform duration-700 hover:scale-105"
                   />
-                </a>
+                </button>
               ))}
             </div>
           </div>
