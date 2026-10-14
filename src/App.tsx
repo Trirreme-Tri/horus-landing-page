@@ -12,6 +12,7 @@ import { Portfolio } from '@/components/sections/portfolio'
 import { Print } from '@/components/sections/print'
 import { Services } from '@/components/sections/services'
 import { Social } from '@/components/sections/social'
+import { ChapterMarker } from '@/components/ui/chapter-marker'
 import { Cursor } from '@/components/ui/cursor'
 import { Grain } from '@/components/ui/grain'
 import { Preloader } from '@/components/ui/preloader'
@@ -41,6 +42,7 @@ export default function App() {
       <AnimatePresence>{!ready && <Preloader onDone={done} />}</AnimatePresence>
       <Grain />
       <Cursor />
+      <ChapterMarker />
       <Nav ready={ready} />
       <main>
         <Hero ready={ready} />
