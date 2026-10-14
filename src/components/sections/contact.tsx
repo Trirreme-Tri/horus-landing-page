@@ -22,7 +22,7 @@ export function Contact() {
         </p>
         <h2 className="mt-8 font-display font-light leading-[0.85]">
           <span className="block font-script text-6xl text-bone/90 md:text-9xl">Posso ser sua</span>
-          <SplitReveal text="DESIGNER?" className="justify-center text-[17vw] tracking-[0.02em] md:text-[13vw]" />
+          <SplitReveal text="DESIGNER?" className="justify-center text-[13.5vw] tracking-[0.02em] md:text-[13vw]" />
         </h2>
 
         <div className="mt-12 flex flex-col items-center gap-6">
@@ -50,10 +50,11 @@ export function Contact() {
 
       <footer className="relative border-t border-bone/15">
         <div ref={sigRef} className="mx-auto max-w-7xl px-4 pt-10 md:px-8">
-          <svg viewBox="0 0 1000 220" className="w-full" role="img" aria-label="Obrigada!">
+          {/* viewBox alto o bastante para a cauda do "g" e as hastes da letra cursiva não serem cortadas */}
+          <svg viewBox="0 0 1000 290" className="w-full overflow-visible" role="img" aria-label="Obrigada!">
             <motion.text
               x="50%"
-              y="72%"
+              y="185"
               textAnchor="middle"
               className="font-script"
               fontSize="190"
@@ -68,7 +69,7 @@ export function Contact() {
             </motion.text>
             <motion.text
               x="50%"
-              y="72%"
+              y="185"
               textAnchor="middle"
               className="font-script"
               fontSize="190"
